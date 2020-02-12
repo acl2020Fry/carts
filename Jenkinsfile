@@ -113,6 +113,7 @@ pipeline {
 
         container('jmeter') {
           script {
+            @NonCPS
             def status = executeJMeter ( 
               scriptName: 'jmeter/basiccheck.jmx', 
               resultsDir: "HealthCheck_${env.APP_NAME}_dev_${env.VERSION}_${BUILD_NUMBER}",
@@ -142,6 +143,7 @@ pipeline {
       steps {
         container('jmeter') {
           script {
+            @NonCPS
             def status = executeJMeter (
               scriptName: "jmeter/${env.APP_NAME}_load.jmx", 
               resultsDir: "FuncCheck_${env.APP_NAME}_dev_${env.VERSION}_${BUILD_NUMBER}",
