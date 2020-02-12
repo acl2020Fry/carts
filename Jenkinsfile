@@ -41,7 +41,7 @@ pipeline {
       }
       steps {
         container('docker') {
-          sh "docker build -t ${env.TAG_DEV} --network container:\$(docker ps | grep \$(hostname) | grep k8s_POD | cut -d\" \" -f1) ."
+          sh "docker build -t ${env.TAG_DEV} ."
         }
       }
     }
@@ -113,7 +113,6 @@ pipeline {
 
         container('jmeter') {
           script {
-            @NonCPS
             def status = executeJMeter ( 
               scriptName: 'jmeter/basiccheck.jmx', 
               resultsDir: "HealthCheck_${env.APP_NAME}_dev_${env.VERSION}_${BUILD_NUMBER}",
@@ -143,7 +142,6 @@ pipeline {
       steps {
         container('jmeter') {
           script {
-            @NonCPS
             def status = executeJMeter (
               scriptName: "jmeter/${env.APP_NAME}_load.jmx", 
               resultsDir: "FuncCheck_${env.APP_NAME}_dev_${env.VERSION}_${BUILD_NUMBER}",
